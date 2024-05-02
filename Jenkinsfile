@@ -16,20 +16,20 @@ pipeline {
             }
             post {
                 success {
-                    emailext(
-                        to: 'shanonudith@gmail.com',
+                    
+                       mail to: 'shanonudith@gmail.com',
                         subject: "Unit and Integration Tests Passed",
                         body: "The unit and integration tests have passed successfully.",
                         attachmentsPattern: 'F:/Deakin Masters Studies/2nd Sem/profe/Jenkinsfile/continuous_delivery_pipeline_task6.1C/test-reports/test-reports.txt'
-                    )
+                    
                 }
                 failure {
-                    emailext(
-                        to: 'shanonudith@gmail.com',
+                    
+                       mail to: 'shanonudith@gmail.com',
                         subject: "Unit and Integration Tests Failed",
                         body: "The unit and integration tests have failed.",
                         attachmentsPattern: 'F:/Deakin Masters Studies/2nd Sem/profe/Jenkinsfile/continuous_delivery_pipeline_task6.1C/test-reports/test-reports.txt'
-                    )
+                    
                 }
             }
         }
@@ -46,20 +46,20 @@ pipeline {
             }
             post {
                 success {
-                    emailext(
-                        to: 'shanonudith@gmail.com',
+                   
+                       mail to: 'shanonudith@gmail.com',
                         subject: "Security Scan Passed",
                         body: "The security scan has passed successfully.",
                         attachmentsPattern: 'F:/Deakin Masters Studies/2nd Sem/profe/Jenkinsfile/continuous_delivery_pipeline_task6.1C/security-reports/security-reports.txt'
-                    )
+                   
                 }
                 failure {
-                    emailext(
-                        to: 'shanonudith@gmail.com',
+                   
+                       mail to: 'shanonudith@gmail.com',
                         subject: "Security Scan Failed",
                         body: "The security scan has failed.",
                         attachmentsPattern: 'F:/Deakin Masters Studies/2nd Sem/profe/Jenkinsfile/continuous_delivery_pipeline_task6.1C/security-reports/security-reports.txt'
-                    )
+                    
                 }
             }
         }
