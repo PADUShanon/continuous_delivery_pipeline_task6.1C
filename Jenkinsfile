@@ -13,7 +13,8 @@ pipeline {
                 // Unit test command (e.g., mvn test)
                 echo 'Running integration tests...'
                 // Integration test command (e.g., mvn integration-test)
-                 post {
+            }
+            post {
                 success {
                     emailext(
                         to: 'shanonudith@gmail.com',
@@ -30,7 +31,6 @@ pipeline {
                         attachmentsPattern: 'F:/Deakin Masters Studies/2nd Sem/profe/Jenkinsfile/continuous_delivery_pipeline_task6.1C/test-reports/test-reports.txt'
                     )
                 }
-            }
             }
         }
         stage('Code Analysis') {
@@ -80,6 +80,11 @@ pipeline {
                 echo 'Deploying the application to production server...'
                 // Deployment command (e.g., SSH or Ansible)
             }
+        }
+    }
+    post {
+        always {
+            echo 'Pipeline completed!'
         }
     }
 }
