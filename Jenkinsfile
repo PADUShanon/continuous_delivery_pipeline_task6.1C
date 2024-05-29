@@ -10,7 +10,7 @@ pipeline {
                 success {
                     mail to: 'shanonudith@gmail.com',
                          subject: "Build Stage Passed",
-                         body: "The build stage has completed successfully."
+                         body: "The build stage has completed successfully.", attachLog:true
                 }
                 failure {
                     mail to: 'shanonudith@gmail.com',
