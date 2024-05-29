@@ -28,14 +28,19 @@ pipeline {
             }
             post {
                 success {
-                    emailext to: 'shanonudith@gmail.com',
-                         subject: "Unit and Integration Tests Passed",
-                         body: "The unit and integration tests have passed successfully.", attachLog: true
+                    emailext subject: 'Unit and Integration Tests Passed',
+                    body: 'The unit and integration tests have passed successfully.',
+                    to: 'shanonudith@gmail.com',
+                    attachLog: true
                 }
                 failure {
-                    emailext to: 'shanonudith@gmail.com',
-                         subject: "Unit and Integration Tests Failed",
-                         body: "The unit and integration tests have failed.", attachLog: true
+                    script {
+                        currentBuild.result = 'FAILURE'
+                    }
+                    emailext subject: 'Unit and Integration Tests Failed',
+                    body: 'The unit and integration tests have failed.',
+                    to: 'shanonudith@gmail.com',
+                    attachLog: true
                 }
             }
         }
@@ -51,6 +56,9 @@ pipeline {
                          body: "The code analysis has passed successfully.", attachLog: true
                 }
                 failure {
+                    script {
+                        currentBuild.result = 'FAILURE'
+                    }
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Code Analysis Failed",
                          body: "The code analysis has failed.", attachLog: true
@@ -69,6 +77,9 @@ pipeline {
                          body: "The security scan has passed successfully.", attachLog: true
                 }
                 failure {
+                    script {
+                        currentBuild.result = 'FAILURE'
+                    }
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Security Scan Failed",
                          body: "The security scan has failed.", attachLog: true
@@ -87,6 +98,9 @@ pipeline {
                          body: "The deployment to staging has passed successfully.", attachLog: true
                 }
                 failure {
+                    script {
+                        currentBuild.result = 'FAILURE'
+                    }
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Deploy to Staging Failed",
                          body: "The deployment to staging has failed.", attachLog: true
@@ -105,6 +119,9 @@ pipeline {
                          body: "The integration tests on staging have passed successfully.", attachLog: true
                 }
                 failure {
+                    script {
+                        currentBuild.result = 'FAILURE'
+                    }
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Integration Tests on Staging Failed",
                          body: "The integration tests on staging have failed.", attachLog: true
@@ -123,6 +140,9 @@ pipeline {
                          body: "The deployment to production has passed successfully.", attachLog: true
                 }
                 failure {
+                    script {
+                        currentBuild.result = 'FAILURE'
+                    }
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Deploy to Production Failed",
                          body: "The deployment to production has failed.", attachLog: true
