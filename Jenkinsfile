@@ -4,7 +4,6 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the code using Maven...'
-                // Example Maven build command
                 sh 'mvn clean install'
             }
             post {
@@ -12,19 +11,19 @@ pipeline {
                     script {
                         archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
                         archiveArtifacts artifacts: 'build-logs/build.log', allowEmptyArchive: true
-                        mail to: 'shanonudith@gmail.com',
-                             subject: "Build Stage Passed",
-                             body: "The build stage has completed successfully.",
-                             attachmentsPattern: 'build-logs/build.log'
+                        emailext to: 'shanonudith@gmail.com',
+                                 subject: "Build Stage Passed",
+                                 body: "The build stage has completed successfully.",
+                                 attachmentsPattern: 'build-logs/build.log'
                     }
                 }
                 failure {
                     script {
                         archiveArtifacts artifacts: 'build-logs/build.log', allowEmptyArchive: true
-                        mail to: 'shanonudith@gmail.com',
-                             subject: "Build Stage Failed",
-                             body: "The build stage has failed.",
-                             attachmentsPattern: 'build-logs/build.log'
+                        emailext to: 'shanonudith@gmail.com',
+                                 subject: "Build Stage Failed",
+                                 body: "The build stage has failed.",
+                                 attachmentsPattern: 'build-logs/build.log'
                     }
                 }
             }
@@ -32,29 +31,27 @@ pipeline {
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running unit tests...'
-                // Example unit test command
                 sh 'mvn test > build-logs/test.log'
                 echo 'Running integration tests...'
-                // Example integration test command
                 sh 'mvn verify >> build-logs/test.log'
             }
             post {
                 success {
                     script {
                         archiveArtifacts artifacts: 'build-logs/test.log', allowEmptyArchive: true
-                        mail to: 'shanonudith@gmail.com',
-                             subject: "Unit and Integration Tests Passed",
-                             body: "The unit and integration tests have passed successfully.",
-                             attachmentsPattern: 'build-logs/test.log'
+                        emailext to: 'shanonudith@gmail.com',
+                                 subject: "Unit and Integration Tests Passed",
+                                 body: "The unit and integration tests have passed successfully.",
+                                 attachmentsPattern: 'build-logs/test.log'
                     }
                 }
                 failure {
                     script {
                         archiveArtifacts artifacts: 'build-logs/test.log', allowEmptyArchive: true
-                        mail to: 'shanonudith@gmail.com',
-                             subject: "Unit and Integration Tests Failed",
-                             body: "The unit and integration tests have failed.",
-                             attachmentsPattern: 'build-logs/test.log'
+                        emailext to: 'shanonudith@gmail.com',
+                                 subject: "Unit and Integration Tests Failed",
+                                 body: "The unit and integration tests have failed.",
+                                 attachmentsPattern: 'build-logs/test.log'
                     }
                 }
             }
@@ -62,26 +59,25 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 echo 'Analyzing code using SonarQube...'
-                // Example SonarQube analysis command
                 sh 'mvn sonar:sonar > build-logs/sonar.log'
             }
             post {
                 success {
                     script {
                         archiveArtifacts artifacts: 'build-logs/sonar.log', allowEmptyArchive: true
-                        mail to: 'shanonudith@gmail.com',
-                             subject: "Code Analysis Passed",
-                             body: "The code analysis has passed successfully.",
-                             attachmentsPattern: 'build-logs/sonar.log'
+                        emailext to: 'shanonudith@gmail.com',
+                                 subject: "Code Analysis Passed",
+                                 body: "The code analysis has passed successfully.",
+                                 attachmentsPattern: 'build-logs/sonar.log'
                     }
                 }
                 failure {
                     script {
                         archiveArtifacts artifacts: 'build-logs/sonar.log', allowEmptyArchive: true
-                        mail to: 'shanonudith@gmail.com',
-                             subject: "Code Analysis Failed",
-                             body: "The code analysis has failed.",
-                             attachmentsPattern: 'build-logs/sonar.log'
+                        emailext to: 'shanonudith@gmail.com',
+                                 subject: "Code Analysis Failed",
+                                 body: "The code analysis has failed.",
+                                 attachmentsPattern: 'build-logs/sonar.log'
                     }
                 }
             }
@@ -89,26 +85,25 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo 'Scanning code for security vulnerabilities...'
-                // Example OWASP Dependency-Check command
                 sh 'dependency-check.sh -s . > build-logs/security-scan.log'
             }
             post {
                 success {
                     script {
                         archiveArtifacts artifacts: 'build-logs/security-scan.log', allowEmptyArchive: true
-                        mail to: 'shanonudith@gmail.com',
-                             subject: "Security Scan Passed",
-                             body: "The security scan has passed successfully.",
-                             attachmentsPattern: 'build-logs/security-scan.log'
+                        emailext to: 'shanonudith@gmail.com',
+                                 subject: "Security Scan Passed",
+                                 body: "The security scan has passed successfully.",
+                                 attachmentsPattern: 'build-logs/security-scan.log'
                     }
                 }
                 failure {
                     script {
                         archiveArtifacts artifacts: 'build-logs/security-scan.log', allowEmptyArchive: true
-                        mail to: 'shanonudith@gmail.com',
-                             subject: "Security Scan Failed",
-                             body: "The security scan has failed.",
-                             attachmentsPattern: 'build-logs/security-scan.log'
+                        emailext to: 'shanonudith@gmail.com',
+                                 subject: "Security Scan Failed",
+                                 body: "The security scan has failed.",
+                                 attachmentsPattern: 'build-logs/security-scan.log'
                     }
                 }
             }
@@ -116,26 +111,25 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying the application to staging server...'
-                // Example deployment command
                 sh 'deploy.sh staging > build-logs/deploy-staging.log'
             }
             post {
                 success {
                     script {
                         archiveArtifacts artifacts: 'build-logs/deploy-staging.log', allowEmptyArchive: true
-                        mail to: 'shanonudith@gmail.com',
-                             subject: "Deploy to Staging Passed",
-                             body: "The deployment to staging has passed successfully.",
-                             attachmentsPattern: 'build-logs/deploy-staging.log'
+                        emailext to: 'shanonudith@gmail.com',
+                                 subject: "Deploy to Staging Passed",
+                                 body: "The deployment to staging has passed successfully.",
+                                 attachmentsPattern: 'build-logs/deploy-staging.log'
                     }
                 }
                 failure {
                     script {
                         archiveArtifacts artifacts: 'build-logs/deploy-staging.log', allowEmptyArchive: true
-                        mail to: 'shanonudith@gmail.com',
-                             subject: "Deploy to Staging Failed",
-                             body: "The deployment to staging has failed.",
-                             attachmentsPattern: 'build-logs/deploy-staging.log'
+                        emailext to: 'shanonudith@gmail.com',
+                                 subject: "Deploy to Staging Failed",
+                                 body: "The deployment to staging has failed.",
+                                 attachmentsPattern: 'build-logs/deploy-staging.log'
                     }
                 }
             }
@@ -143,26 +137,25 @@ pipeline {
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Running integration tests on staging environment...'
-                // Example integration test command
                 sh 'run-integration-tests.sh staging > build-logs/integration-tests-staging.log'
             }
             post {
                 success {
                     script {
                         archiveArtifacts artifacts: 'build-logs/integration-tests-staging.log', allowEmptyArchive: true
-                        mail to: 'shanonudith@gmail.com',
-                             subject: "Integration Tests on Staging Passed",
-                             body: "The integration tests on staging have passed successfully.",
-                             attachmentsPattern: 'build-logs/integration-tests-staging.log'
+                        emailext to: 'shanonudith@gmail.com',
+                                 subject: "Integration Tests on Staging Passed",
+                                 body: "The integration tests on staging have passed successfully.",
+                                 attachmentsPattern: 'build-logs/integration-tests-staging.log'
                     }
                 }
                 failure {
                     script {
                         archiveArtifacts artifacts: 'build-logs/integration-tests-staging.log', allowEmptyArchive: true
-                        mail to: 'shanonudith@gmail.com',
-                             subject: "Integration Tests on Staging Failed",
-                             body: "The integration tests on staging have failed.",
-                             attachmentsPattern: 'build-logs/integration-tests-staging.log'
+                        emailext to: 'shanonudith@gmail.com',
+                                 subject: "Integration Tests on Staging Failed",
+                                 body: "The integration tests on staging have failed.",
+                                 attachmentsPattern: 'build-logs/integration-tests-staging.log'
                     }
                 }
             }
@@ -170,26 +163,25 @@ pipeline {
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying the application to production server...'
-                // Example deployment command
                 sh 'deploy.sh production > build-logs/deploy-production.log'
             }
             post {
                 success {
                     script {
                         archiveArtifacts artifacts: 'build-logs/deploy-production.log', allowEmptyArchive: true
-                        mail to: 'shanonudith@gmail.com',
-                             subject: "Deploy to Production Passed",
-                             body: "The deployment to production has passed successfully.",
-                             attachmentsPattern: 'build-logs/deploy-production.log'
+                        emailext to: 'shanonudith@gmail.com',
+                                 subject: "Deploy to Production Passed",
+                                 body: "The deployment to production has passed successfully.",
+                                 attachmentsPattern: 'build-logs/deploy-production.log'
                     }
                 }
                 failure {
                     script {
                         archiveArtifacts artifacts: 'build-logs/deploy-production.log', allowEmptyArchive: true
-                        mail to: 'shanonudith@gmail.com',
-                             subject: "Deploy to Production Failed",
-                             body: "The deployment to production has failed.",
-                             attachmentsPattern: 'build-logs/deploy-production.log'
+                        emailext to: 'shanonudith@gmail.com',
+                                 subject: "Deploy to Production Failed",
+                                 body: "The deployment to production has failed.",
+                                 attachmentsPattern: 'build-logs/deploy-production.log'
                     }
                 }
             }
@@ -200,14 +192,15 @@ pipeline {
             echo 'Pipeline completed!'
             script {
                 archiveArtifacts artifacts: 'build-logs/*.log', allowEmptyArchive: true
-                mail to: 'shanonudith@gmail.com',
-                     subject: "Pipeline Completed",
-                     body: "The Jenkins pipeline has completed.",
-                     attachmentsPattern: 'build-logs/*.log'
+                emailext to: 'shanonudith@gmail.com',
+                         subject: "Pipeline Completed",
+                         body: "The Jenkins pipeline has completed.",
+                         attachmentsPattern: 'build-logs/*.log'
             }
         }
     }
 }
+
 
 
 
