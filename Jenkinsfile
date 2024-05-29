@@ -8,7 +8,7 @@ pipeline {
             }
             post {
                 success {
-                    email to: 'shanonudith@gmail.com',
+                    emailext to: 'shanonudith@gmail.com',
                          subject: "Build Stage Passed",
                          body: "The build stage has completed successfully.", attachLog:true
                 }
@@ -53,7 +53,8 @@ pipeline {
                 success {
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Code Analysis Passed",
-                         body: "The code analysis has passed successfully.", attachLog: true
+                         body: "The code analysis has passed successfully.", 
+                         attachLog: true
                 }
                 failure {
                     script {
@@ -61,7 +62,8 @@ pipeline {
                     }
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Code Analysis Failed",
-                         body: "The code analysis has failed.", attachLog: true
+                         body: "The code analysis has failed.", 
+                         attachLog: true
                 }
             }
         }
@@ -74,7 +76,8 @@ pipeline {
                 success {
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Security Scan Passed",
-                         body: "The security scan has passed successfully.", attachLog: true
+                         body: "The security scan has passed successfully.", 
+                         attachLog: true
                 }
                 failure {
                     script {
@@ -82,7 +85,8 @@ pipeline {
                     }
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Security Scan Failed",
-                         body: "The security scan has failed.", attachLog: true
+                         body: "The security scan has failed.", 
+                         attachLog: true
                 }
             }
         }
@@ -95,7 +99,8 @@ pipeline {
                 success {
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Deploy to Staging Passed",
-                         body: "The deployment to staging has passed successfully.", attachLog: true
+                         body: "The deployment to staging has passed successfully.", 
+                         attachLog: true
                 }
                 failure {
                     script {
@@ -103,7 +108,8 @@ pipeline {
                     }
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Deploy to Staging Failed",
-                         body: "The deployment to staging has failed.", attachLog: true
+                         body: "The deployment to staging has failed.", 
+                         attachLog: true
                 }
             }
         }
@@ -116,7 +122,8 @@ pipeline {
                 success {
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Integration Tests on Staging Passed",
-                         body: "The integration tests on staging have passed successfully.", attachLog: true
+                         body: "The integration tests on staging have passed successfully.", 
+                         attachLog: true
                 }
                 failure {
                     script {
@@ -124,7 +131,8 @@ pipeline {
                     }
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Integration Tests on Staging Failed",
-                         body: "The integration tests on staging have failed.", attachLog: true
+                         body: "The integration tests on staging have failed.", 
+                         attachLog: true
                 }
             }
         }
@@ -137,7 +145,8 @@ pipeline {
                 success {
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Deploy to Production Passed",
-                         body: "The deployment to production has passed successfully.", attachLog: true
+                         body: "The deployment to production has passed successfully.", 
+                         attachLog: true
                 }
                 failure {
                     script {
@@ -145,7 +154,8 @@ pipeline {
                     }
                     emailext to: 'shanonudith@gmail.com',
                          subject: "Deploy to Production Failed",
-                         body: "The deployment to production has failed.", attachLog: true
+                         body: "The deployment to production has failed.", 
+                         attachLog: true
                 }
             }
         }
@@ -155,7 +165,8 @@ pipeline {
             echo 'Pipeline completed!'
             emailext to: 'shanonudith@gmail.com',
                  subject: "Pipeline Completed",
-                 body: "The Jenkins pipeline has completed.", attachLog: true
+                 body: "The Jenkins pipeline has completed.", 
+                 attachLog: true
         }
     }
 }
