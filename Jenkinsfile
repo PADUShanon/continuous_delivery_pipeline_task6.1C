@@ -1,29 +1,32 @@
 pipeline {
     agent any
+    environment {
+        LOG_DIR = 'build-logs'
+    }
     stages {
         stage('Build') {
             steps {
                 echo 'Building the code using Maven...'
-                sh 'mvn clean install'
+                bat 'mvn clean install'
             }
             post {
                 success {
                     script {
                         archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
-                        archiveArtifacts artifacts: 'build-logs/build.log', allowEmptyArchive: true
+                        archiveArtifacts artifacts: "${env.LOG_DIR}/build.log", allowEmptyArchive: true
                         emailext to: 'shanonudith@gmail.com',
                                  subject: "Build Stage Passed",
                                  body: "The build stage has completed successfully.",
-                                 attachmentsPattern: 'build-logs/build.log'
+                                 attachmentsPattern: "${env.LOG_DIR}/build.log"
                     }
                 }
                 failure {
                     script {
-                        archiveArtifacts artifacts: 'build-logs/build.log', allowEmptyArchive: true
+                        archiveArtifacts artifacts: "${env.LOG_DIR}/build.log", allowEmptyArchive: true
                         emailext to: 'shanonudith@gmail.com',
                                  subject: "Build Stage Failed",
                                  body: "The build stage has failed.",
-                                 attachmentsPattern: 'build-logs/build.log'
+                                 attachmentsPattern: "${env.LOG_DIR}/build.log"
                     }
                 }
             }
@@ -31,9 +34,9 @@ pipeline {
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running unit tests...'
-                sh 'mvn test > build-logs/test.log'
+                bat 'mvn test > build-logs/test.log'
                 echo 'Running integration tests...'
-                sh 'mvn verify >> build-logs/test.log'
+                bat 'mvn verify >> build-logs/test.log'
             }
             post {
                 success {
@@ -59,7 +62,7 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 echo 'Analyzing code using SonarQube...'
-                sh 'mvn sonar:sonar > build-logs/sonar.log'
+                bat 'mvn sonar:sonar > build-logs/sonar.log'
             }
             post {
                 success {
@@ -85,7 +88,7 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo 'Scanning code for security vulnerabilities...'
-                sh 'dependency-check.sh -s . > build-logs/security-scan.log'
+                bat 'dependency-check.bat -s . > build-logs/security-scan.log'
             }
             post {
                 success {
@@ -111,7 +114,7 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying the application to staging server...'
-                sh 'deploy.sh staging > build-logs/deploy-staging.log'
+                bat 'deploy.bat staging > build-logs/deploy-staging.log'
             }
             post {
                 success {
@@ -137,7 +140,7 @@ pipeline {
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Running integration tests on staging environment...'
-                sh 'run-integration-tests.sh staging > build-logs/integration-tests-staging.log'
+                bat 'run-integration-tests.bat staging > build-logs/integration-tests-staging.log'
             }
             post {
                 success {
@@ -163,7 +166,7 @@ pipeline {
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying the application to production server...'
-                sh 'deploy.sh production > build-logs/deploy-production.log'
+                bat 'deploy.bat production > build-logs/deploy-production.log'
             }
             post {
                 success {
@@ -200,7 +203,6 @@ pipeline {
         }
     }
 }
-
 
 
 
